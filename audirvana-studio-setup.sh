@@ -1,1 +1,0 @@
-# audirvana studio setup script

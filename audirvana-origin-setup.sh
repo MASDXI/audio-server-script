@@ -1,1 +1,0 @@
-# audirvana origin setup script
