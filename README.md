@@ -29,7 +29,7 @@ Add this line for allowing audio process priority to `95` and allow using memory
 > [!TIP]
 > using command `whoami` for get current user
 
-Change `pipewire.conf`, let `pipewire` change clock rates to avoid unintended upsampling.  
+Change `/usr/share/pipewire/pirewire.conf`, let `pipewire` change clock rates to avoid unintended upsampling.  
 
 ``` text 
 default.clock.allowed-rates = [ 44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000 ]
