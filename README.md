@@ -31,9 +31,26 @@ Add this line for allowing audio process priority to `95` and allow using memory
 
 Change `/usr/share/pipewire/pirewire.conf`, let `pipewire` change clock rates to avoid unintended upsampling.  
 
+```
+mkdir -p .config/pipewire
+```
+
+Copy `pipewire.conf` to `.config/pipewire`
+```
+sudo cp /usr/share/pipewire/pirewire.conf .config/pirewire/
+```
+
+Edit uncomment `default.clock.allowed-rates` line
+
 ``` text 
 default.clock.allowed-rates = [ 44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000 ]
 ``` 
+
+Restart `pipewire` 
+
+```
+systemctl --user restart pipewire.service pipewire-pulse.service
+```
 
 > [!IMPORTANT]
 > If you installing `WiFi` module on your system, you should connect to your network before going to installing software step.
@@ -52,7 +69,6 @@ $ ./spotifyd-setup.sh
 
 > [!NOTE]
 > The `hostname` use as default device name of `audirvana` and `spotify`.
-
 
 ## TODO 
 

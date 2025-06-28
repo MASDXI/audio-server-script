@@ -2,8 +2,8 @@
 # spotifyd setup script
 set -e  # Exit on any error
 
-USER_NAME="${SUDO_USER:-$USER}"
-HOME_DIR=$(eval echo "~$USER_NAME")
+USERNAME="${SUDO_USER:-$USER}"
+HOME_DIR=$(eval echo "~$USERNAME")
 HOSTNAME="$(cat /etc/hostname)"
 
 # Prompt user for variant input
@@ -52,7 +52,7 @@ cp ./config/spotifyd.service spotifyd.service
 SPOTIFYD_CONF="./spotifyd.conf"
 SPOTIFYD_SERVICE="./spotifyd.service"
 sed -i "s/\bDEVICE_NAME\b/$HOSTNAME/g" "$SPOTIFYD_CONF"
-sed -i "s|/home/USER/|$HOME_DIR/|g" "$SPOTIFYD_SERVICE"
+sed -i "s|/home/USER/|/home/$USERNAME/|g" "$SPOTIFYD_SERVICE"
 
 mkdir -p "$HOME_DIR/.cache/spotifyd"
 mkdir -p "$HOME_DIR/.config/spotifyd"
