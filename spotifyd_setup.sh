@@ -42,6 +42,7 @@ wget "$DOWNLOAD_URL" -O "$ARCHIVE_NAME" || { echo "[ERROR] Failed to download $A
 tar xzf "$ARCHIVE_NAME"
 sudo chmod +x spotifyd
 sudo mv spotifyd /usr/local/bin/
+timeout 12s spotifyd --no-daemon || true
 
 # Copy config and service file
 cp ./config/spotifyd.conf spotifyd.conf 
