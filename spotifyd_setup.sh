@@ -2,7 +2,8 @@
 # spotifyd setup script
 set -e  # Exit on any error
 
-USER="$(whoami)"
+USER_NAME="${SUDO_USER:-$USER}"
+HOME_DIR=$(eval echo "~$USER_NAME")
 HOSTNAME="$(cat /etc/hostname)"
 
 # Prompt user for variant input
@@ -42,10 +43,6 @@ tar xzf "$ARCHIVE_NAME"
 sudo chmod +x spotifyd
 sudo mv spotifyd /usr/local/bin/
 
-# Create config directory
-mkdir -p .config/spotifyd
-mkdir -p .cache/spotifyd
-
 # Copy config and service file
 cp ./config/spotifyd.conf spotifyd.conf 
 cp ./config/spotifyd.service cp spotifyd.service
@@ -54,15 +51,18 @@ cp ./config/spotifyd.service cp spotifyd.service
 SPOTIFYD_CONF="./spotifyd.conf"
 SPOTIFYD_SERVICE="./spotifyd.service"
 sed -i "s/\bDEVICE_NAME\b/$HOSTNAME/g" "$SPOTIFYD_CONF"
-sed -i "s|/home/USER/|/home/$USER/|g" "$SPOTIFYD_SERVICE"
+sed -i "s|/home/USER/|$HOME_DIR/|g" "$SPOTIFYD_SERVICE"
+
+mkdir -p "$HOME_DIR/.cache/spotifyd"
+mkdir -p "$HOME_DIR/.config/spotifyd"
+mkdir -p "$HOME_DIR/.config/systemd/user"
 
 # Copy config to .config/spoitfyd
-sudo mv ./spotifyd.conf .config/spotifyd/spotifyd.conf
-
-# Copy service to .config/systemd/user
-sudo mv ./spotify.service .confing/systemd/user/
+mv ./spotifyd.conf "$HOME_DIR/.config/spotifyd/spotifyd.conf"
+mv ./spotifyd.service "$HOME_DIR/.config/systemd/user/"
 
 # Start spotifyd running as a service
+systemctl --user daemon-reload
 systemctl --user enable spotifyd.service --now
 
 # Cleanup Downloaded file
