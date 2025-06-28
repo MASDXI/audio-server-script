@@ -29,15 +29,16 @@ Add this line for allowing audio process priority to `95` and allow using memory
 > [!TIP]
 > using command `whoami` for get current user
 
+
 Change `/usr/share/pipewire/pirewire.conf`, let `pipewire` change clock rates to avoid unintended upsampling.  
 
-```
-mkdir -p .config/pipewire
+``` shell
+$ mkdir -p .config/pipewire
 ```
 
 Copy `pipewire.conf` to `.config/pipewire`
-```
-sudo cp /usr/share/pipewire/pirewire.conf .config/pirewire/
+``` shell
+$ sudo cp /usr/share/pipewire/pirewire.conf .config/pirewire/
 ```
 
 Edit uncomment `default.clock.allowed-rates` line
@@ -48,8 +49,14 @@ default.clock.allowed-rates = [ 44100, 48000, 88200, 96000, 176400, 192000, 3528
 
 Restart `pipewire` 
 
+``` shell
+$ systemctl --user restart pipewire.service pipewire-pulse.service
 ```
-systemctl --user restart pipewire.service pipewire-pulse.service
+
+Turn off power-off confirmation useful for headless configuration
+
+``` shell
+$ gsettings set org.gnome.SessionManager logout-prompt false
 ```
 
 > [!IMPORTANT]
