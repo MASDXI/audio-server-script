@@ -45,7 +45,7 @@ sudo mv spotifyd /usr/local/bin/
 
 # Copy config and service file
 cp ./config/spotifyd.conf spotifyd.conf 
-cp ./config/spotifyd.service cp spotifyd.service
+cp ./config/spotifyd.service spotifyd.service
 
 # Define variables for config and service file
 SPOTIFYD_CONF="./spotifyd.conf"
