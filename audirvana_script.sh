@@ -3,7 +3,7 @@
 set -e  # Exit on any error
 
 # Prompt user for variant input
-read -p "Enter variant to instal (studio, origin) [studio]: " VARIANT
+read -p "[INFO] Enter variant to instal (studio, origin) [studio]: " VARIANT
 VARIANT="${VARIANT:-studio}"  # if none use studio as default value
 
 # Validate input variant
@@ -26,7 +26,7 @@ OS=$([ -x "$(command -v apt)" ] && echo "deb" || echo "rpm")
 # Download URL
 DOWNLOAD_URL="https://audirvana.com/delivery/AudirvanaLinux.php?product=${VARIANT}&arch=${ARCH}&distrib=${OS}"
 
-echo "Downloading Audirvana $VARIANT from: $DOWNLOAD_URL"
+echo "[INFO] Downloading Audirvana $VARIANT from: $DOWNLOAD_URL"
 
 wget --content-disposition $DOWNLOAD_URL
 

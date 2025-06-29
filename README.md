@@ -53,14 +53,14 @@ Restart `pipewire`
 $ systemctl --user restart pipewire.service pipewire-pulse.service
 ```
 
-Turn off power-off confirmation useful for headless configuration
+Disable power-off confirmation for convenience use in headless setup.
 
 ``` shell
 $ gsettings set org.gnome.SessionManager logout-prompt false
 ```
 
 > [!IMPORTANT]
-> If you installing `WiFi` module on your system, you should connect to your network before going to installing software step.
+> If you installing `WiFi` module e.g., pci-e, usb dongle on your system, you should connect to your network before going to installing software step.
 
 ## Installing streaming service software
 
@@ -79,11 +79,18 @@ $ ./spotifyd-setup.sh
 
 ## TODO 
 
-for support other streaming service, library and playback software.
+To support other streaming service, library and playback software.
 
-- Roon
-- Qoobuz
-- Tidal
-- Deezer
+- some DLNA/uPNP setup for cast
+- Automatic Ripping Machine (ARM)
+- DeaDBeef
+- Clementine
+- Foobar2000
 - HQplayer
-- ytmdesktop
+- Roon
+
+No official linux support
+- Deezer deezer-linux
+- Qobuz qobuz-linux
+- Tiodal tidal-hifi
+- Youtube Music ytmdesktop

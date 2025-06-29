@@ -7,7 +7,7 @@ HOME_DIR=$(eval echo "~$USERNAME")
 HOSTNAME="$(cat /etc/hostname)"
 
 # Prompt user for variant input
-read -p "Enter variant to instal (full, slim, default) [default]: " VARIANT
+read -p "[INFO] Enter variant to instal (full, slim, default) [default]: " VARIANT
 VARIANT="${VARIANT:-default}"  # if none use default value
 
 # Validate input variant
@@ -35,22 +35,24 @@ ARCHIVE_NAME="spotifyd-linux-${ARCH}-${VARIANT}.tar.gz"
 # Download URL
 DOWNLOAD_URL="https://github.com/Spotifyd/spotifyd/releases/download/${TAG}/${ARCHIVE_NAME}"
 
-echo "Downloading: $DOWNLOAD_URL"
+echo "[INFO] Downloading: $DOWNLOAD_URL"
 wget "$DOWNLOAD_URL" -O "$ARCHIVE_NAME" || { echo "[ERROR] Failed to download $ARCHIVE_NAME"; exit 1; }
 
 # Extract and install
 tar xzf "$ARCHIVE_NAME"
 sudo chmod +x spotifyd
 sudo mv spotifyd /usr/local/bin/
-timeout 12s spotifyd --no-daemon || true
 
-# Copy config and service file
+# Copy config and service filep 
+cp ./config/spotifyd.bus.conf spotify.bus.conf
 cp ./config/spotifyd.conf spotifyd.conf 
 cp ./config/spotifyd.service spotifyd.service
 
 # Define variables for config and service file
+SPOTIFYD_BUS_COF="./spotifyd.bus.conf"
 SPOTIFYD_CONF="./spotifyd.conf"
 SPOTIFYD_SERVICE="./spotifyd.service"
+sed -i "s/\bUSER\b/$USERNAME/g" "$SPOTIFYD_BUS_COF"
 sed -i "s/\bDEVICE_NAME\b/$HOSTNAME/g" "$SPOTIFYD_CONF"
 sed -i "s|/home/USER/|/home/$USERNAME/|g" "$SPOTIFYD_SERVICE"
 
@@ -62,12 +64,20 @@ mkdir -p "$HOME_DIR/.config/systemd/user"
 mv ./spotifyd.conf "$HOME_DIR/.config/spotifyd/spotifyd.conf"
 mv ./spotifyd.service "$HOME_DIR/.config/systemd/user/"
 
+# Copy bus config to /usr/share/dbus-1/system.d/
+sudo mv ./spotifyd.bus.conf /usr/share/dbus-1/system.d/
+
+# Initialize spotifyd
+echo "[INFO] Initializing spotifyd for 12 seconds."
+timeout 12s spotifyd --no-daemon || true
+
 # Start spotifyd running as a service
+systemctl reload dbus
 systemctl --user daemon-reload
 systemctl --user enable spotifyd.service --now
 
 # Cleanup Downloaded file
 rm -f "$ARCHIVE_NAME"
 
-echo "spotifyd ($VARIANT) for $ARCH installed from $TAG and placed in /usr/local/bin"
-echo "$(spotifyd --version)"
+echo "[INFO] spotifyd ($VARIANT) for $ARCH installed from $TAG and placed in /usr/local/bin"
+echo "[INFO] $(spotifyd --version)"
