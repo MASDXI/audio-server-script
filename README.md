@@ -1,5 +1,7 @@
 # audio-server-script  
 
+A Linux setup script for high-fidelity, headless audio playback. Optimized for bit-perfect output via `PipeWire`, with support for `Audirvana`, and `Spotify`.
+
 ## Preparing operating system configuration
 
 Set current user allow to `NOPASSWD`
@@ -39,6 +41,7 @@ mkdir -p .config/pipewire
 ```
 
 Copy `pipewire.conf` to `.config/pipewire`
+
 ``` shell
 sudo cp /usr/share/pipewire/pipewire.conf .config/pirewire/
 ```
@@ -50,10 +53,12 @@ default.clock.allowed-rates = [ 44100, 48000, 88200, 96000, 176400, 192000, 3528
 ``` 
 
 Copy `client.conf` and `pipewire-pulse.conf` to `.config/pipewire`
+
 ``` shell
 sudo cp /usr/share/pipewire/client.conf .config/pirewire/
 sudo cp /usr/share/pipewire/pipewire-pulse.conf .config/pirewire/
 ```
+
 Edit uncomment `resample.quality` and add `resample.disable` to both file
 
 ``` text
@@ -88,6 +93,12 @@ To install `audirvana` using command:
 ``` shell
 ./audirvana-setup.sh
 ```
+
+<!-- TODO -->
+<!-- To install `roon` using command:
+``` shell
+./roon-setup.sh
+``` -->
 
 To install `spotify` using command:
 ``` shell
