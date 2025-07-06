@@ -1,5 +1,5 @@
 #!/bin/bash
-# tweak Ubuntu desktop 24.04.2 LTS
+# Script to configure Ubuntu desktop 24.04.2 LTS for audio playback.
 
 # Remove current user password login
 USERNAME="${SUDO_USER:-$USER}"
@@ -11,16 +11,20 @@ sudo passwd -d $USERNAME
 # PermitRootLogin yes 
 # PermitEmptyPasswords yes 
 
-
 # priority @audio add user to group
 # TODO
 
-# Tweak gnome
+# Pipewire configuration
+# TODO
+
+# Config gnome
 gsettings set org.gnome.desktop.interface enable-animations false
 gsettings set org.gnome.desktop.sound event-sounds false
+gsettings set org.gnome.SessionManager logout-prompt false
 
-# Disable unused service, socket
-# TODO
+# Disable unused/marked service, socket
+# update service cloud init cups bluetooth and others
+# disable TODO
 systemctl disable bluetooth cups
 
 # rtirq-init priority USB output

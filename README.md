@@ -10,12 +10,12 @@ sudo visudo
 
 Add this line to the configuration.
 ``` text
-USER ALL=(ALL) NOPASSWD:ALL
+$USER ALL=(ALL) NOPASSWD:ALL
 ```
 
 Delete password form current user.
 ``` shell
-sudo passwd -d USER
+sudo passwd -d $USER
 ```
 
 Priority `audio` process by config `/etc/security/limits.d/audio.con`
@@ -31,9 +31,6 @@ Add current user to `audio`, if `audio` group not exist it's will create.
 ```
 getent group audio || sudo groupadd audio && sudo usermod -aG audio $USER
 ```
-
-> [!TIP]
-> using command `whoami` for get current user
 
 Change `/usr/share/pipewire/pirewire.conf`, let `pipewire` change clock rates to avoid unintended upsampling/resampling.  
 
@@ -52,12 +49,17 @@ Edit uncomment `default.clock.allowed-rates` line.
 default.clock.allowed-rates = [ 44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000, 705600, 76800, 1311200, 1536000 ]
 ``` 
 
-<!-- Edit uncomment `resample.disable` and `resample.quality` line -->
-<!-- 
+Copy `client.conf` and `pipewire-pulse.conf` to `.config/pipewire`
+``` shell
+sudo cp /usr/share/pipewire/client.conf .config/pirewire/
+sudo cp /usr/share/pipewire/pipewire-pulse.conf .config/pirewire/
+```
+Edit uncomment `resample.quality` and add `resample.disable` to both file
+
 ``` text
 resample.disable = true
 resample.quality = 0
-```  -->
+``` 
 
 Restart the `pipewire` service.
 
@@ -71,7 +73,7 @@ Disable power-off confirmation for convenience use in headless setup.
 gsettings set org.gnome.SessionManager logout-prompt false
 ```
 
-Disable visual-effect for tweak.
+Disable GUI visual-effect.
 
 ``` shell
 gsettings set org.gnome.desktop.interface enable-animations false
