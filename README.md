@@ -5,58 +5,76 @@
 Set current user allow to `NOPASSWD`
 
 ``` shell
-$ sudo visudo
+sudo visudo
 ```
 
-Add this line to the configuration
+Add this line to the configuration.
 ``` text
 USER ALL=(ALL) NOPASSWD:ALL
 ```
 
-Delete password form current user
+Delete password form current user.
 ``` shell
-$ sudo passwd -d USER
+sudo passwd -d USER
 ```
 
-Priority audio process by config `/etc/security/limits.d/audio.con`
+Priority `audio` process by config `/etc/security/limits.d/audio.con`
 
-Add this line for allowing audio process priority to `95` and allow using memory `unlimited`.
+Add this line for allowing `audio` process priority to `95` and allow using memory `unlimited`.
 ``` text
 @audio   -  rtprio     95
 @audio   -  memlock    unlimited
 ```
 
+Add current user to `audio`, if `audio` group not exist it's will create.
+
+```
+getent group audio || sudo groupadd audio && sudo usermod -aG audio $USER
+```
+
 > [!TIP]
 > using command `whoami` for get current user
 
-
-Change `/usr/share/pipewire/pirewire.conf`, let `pipewire` change clock rates to avoid unintended upsampling.  
+Change `/usr/share/pipewire/pirewire.conf`, let `pipewire` change clock rates to avoid unintended upsampling/resampling.  
 
 ``` shell
-$ mkdir -p .config/pipewire
+mkdir -p .config/pipewire
 ```
 
 Copy `pipewire.conf` to `.config/pipewire`
 ``` shell
-$ sudo cp /usr/share/pipewire/pirewire.conf .config/pirewire/
+sudo cp /usr/share/pipewire/pipewire.conf .config/pirewire/
 ```
 
-Edit uncomment `default.clock.allowed-rates` line
+Edit uncomment `default.clock.allowed-rates` line.
 
 ``` text 
-default.clock.allowed-rates = [ 44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000 ]
+default.clock.allowed-rates = [ 44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000, 705600, 76800, 1311200, 1536000 ]
 ``` 
 
-Restart `pipewire` 
+<!-- Edit uncomment `resample.disable` and `resample.quality` line -->
+<!-- 
+``` text
+resample.disable = true
+resample.quality = 0
+```  -->
+
+Restart the `pipewire` service.
 
 ``` shell
-$ systemctl --user restart pipewire.service pipewire-pulse.service
+systemctl --user restart pipewire.service pipewire-pulse.service
 ```
 
 Disable power-off confirmation for convenience use in headless setup.
 
 ``` shell
-$ gsettings set org.gnome.SessionManager logout-prompt false
+gsettings set org.gnome.SessionManager logout-prompt false
+```
+
+Disable visual-effect for tweak.
+
+``` shell
+gsettings set org.gnome.desktop.interface enable-animations false
 ```
 
 > [!IMPORTANT]
@@ -66,12 +84,12 @@ $ gsettings set org.gnome.SessionManager logout-prompt false
 
 To install `audirvana` using command:
 ``` shell
-$ ./audirvana-setup.sh
+./audirvana-setup.sh
 ```
 
 To install `spotify` using command:
 ``` shell
-$ ./spotifyd-setup.sh
+./spotifyd-setup.sh
 ```
 
 > [!NOTE]
@@ -79,18 +97,15 @@ $ ./spotifyd-setup.sh
 
 ## TODO 
 
-To support other streaming service, library and playback software.
+Considered to support other streaming service, library and playback software.
 
-- some DLNA/uPNP setup for cast
-- Automatic Ripping Machine (ARM)
-- DeaDBeef
-- Clementine
-- Foobar2000
-- HQplayer
+- Mopidy 
 - Roon
+- HQplayer (not open-source)
 
-No official linux support
-- Deezer deezer-linux
-- Qobuz qobuz-linux
-- Tiodal tidal-hifi
-- Youtube Music ytmdesktop
+`electron` wrapped application
+- `apple-music-desktop` for Apple Music
+- `deezer-linux` for Deezer
+- `qobuz-linux` for Qobuz
+- `tidal-hifi` for Tidal
+- `ytmdesktop` for Youtube Music
