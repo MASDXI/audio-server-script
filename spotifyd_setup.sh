@@ -27,7 +27,7 @@ esac
 
 # Get latest the version
 TAG=$(curl -sL https://api.github.com/repos/Spotifyd/spotifyd/releases/latest \
-  | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+  | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/' | sed 's#^/##')
 
 # Build archive filename
 ARCHIVE_NAME="spotifyd-linux-${ARCH}-${VARIANT}.tar.gz"

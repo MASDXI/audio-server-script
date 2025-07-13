@@ -16,7 +16,7 @@ $USER ALL=(ALL) NOPASSWD:ALL
 ```
 
 Delete password form current user.
-``` shell
+``` shela
 sudo passwd -d $USER
 ```
 
@@ -114,6 +114,7 @@ Considered to support other streaming service, library and playback software.
 
 - Mopidy 
 - Roon
+- gerbera (upnp)
 - HQplayer (not open-source)
 
 `electron` wrapped application
