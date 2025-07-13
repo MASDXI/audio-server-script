@@ -84,6 +84,12 @@ Disable GUI visual-effect.
 gsettings set org.gnome.desktop.interface enable-animations false
 ```
 
+Disable System sound.
+
+``` shell
+gsettings set org.gnome.desktop.sound event-sounds false
+```
+
 > [!IMPORTANT]
 > If you installing `WiFi` module e.g., pci-e, usb dongle on your system, you should connect to your network before going to installing software step.
 
@@ -111,11 +117,6 @@ To install `spotify` using command:
 ## TODO 
 
 Considered to support other streaming service, library and playback software.
-
-- Mopidy 
-- Roon
-- gerbera (upnp)
-- HQplayer (not open-source)
 
 `electron` wrapped application
 - `apple-music-desktop` for Apple Music
