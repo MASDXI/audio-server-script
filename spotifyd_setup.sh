@@ -54,6 +54,7 @@ SPOTIFYD_CONF="./spotifyd.conf"
 SPOTIFYD_SERVICE="./spotifyd.service"
 # sed -i "s/\bUSER\b/$USERNAME/g" "$SPOTIFYD_BUS_COF"
 sed -i "s/\bDEVICE_NAME\b/$HOSTNAME/g" "$SPOTIFYD_CONF"
+see -i "s/\bUSER\b/$USERNAME/g" "$SPOTIFYD_CONF"
 sed -i "s|/home/USER/|/home/$USERNAME/|g" "$SPOTIFYD_SERVICE"
 
 mkdir -p "$HOME_DIR/.cache/spotifyd"

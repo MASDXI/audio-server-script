@@ -43,7 +43,7 @@ mkdir -p .config/pipewire
 Copy `pipewire.conf` to `.config/pipewire`
 
 ``` shell
-sudo cp /usr/share/pipewire/pipewire.conf .config/pirewire/
+sudo cp /usr/share/pipewire/pipewire.conf .config/pirewire
 ```
 
 Edit uncomment `default.clock.allowed-rates` line.
@@ -55,8 +55,8 @@ default.clock.allowed-rates = [ 44100, 48000, 88200, 96000, 176400, 192000, 3528
 Copy `client.conf` and `pipewire-pulse.conf` to `.config/pipewire`
 
 ``` shell
-sudo cp /usr/share/pipewire/client.conf .config/pirewire/
-sudo cp /usr/share/pipewire/pipewire-pulse.conf .config/pirewire/
+sudo cp /usr/share/pipewire/client.conf .config/pirewire
+sudo cp /usr/share/pipewire/pipewire-pulse.conf .config/pirewire
 ```
 
 Edit uncomment `resample.quality` and add `resample.disable` to both file
