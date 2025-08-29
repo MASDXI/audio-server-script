@@ -34,7 +34,7 @@ Add current user to `audio`, if `audio` group not exist it's will create.
 getent group audio || sudo groupadd audio && sudo usermod -aG audio $USER
 ```
 
-Change `/usr/share/pipewire/pirewire.conf`, let `pipewire` change clock rates to avoid unintended upsampling/resampling.  
+Change `/usr/share/pipewire/pipewire.conf`, let `pipewire` change clock rates to avoid unintended upsampling/resampling.  
 
 ``` shell
 mkdir -p .config/pipewire
@@ -55,8 +55,8 @@ default.clock.allowed-rates = [ 44100, 48000, 88200, 96000, 176400, 192000, 3528
 Copy `client.conf` and `pipewire-pulse.conf` to `.config/pipewire`
 
 ``` shell
-sudo cp /usr/share/pipewire/client.conf .config/pirewire
-sudo cp /usr/share/pipewire/pipewire-pulse.conf .config/pirewire
+sudo cp /usr/share/pipewire/client.conf .config/pipewire
+sudo cp /usr/share/pipewire/pipewire-pulse.conf .config/pipewire
 ```
 
 Edit uncomment `resample.quality` and add `resample.disable` to both file

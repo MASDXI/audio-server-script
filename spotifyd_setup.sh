@@ -44,15 +44,15 @@ sudo chmod +x spotifyd
 sudo mv spotifyd /usr/local/bin/
 
 # Copy config and service filep 
-cp ./config/spotifyd.bus.conf spotifyd.bus.conf 
+# cp ./config/spotifyd.bus.conf spotifyd.bus.conf 
 cp ./config/spotifyd.conf spotifyd.conf 
 cp ./config/spotifyd.service spotifyd.service
 
 # Define variables for config and service file
-SPOTIFYD_BUS_COF="./spotifyd.bus.conf"
+# SPOTIFYD_BUS_COF="./spotifyd.bus.conf"
 SPOTIFYD_CONF="./spotifyd.conf"
 SPOTIFYD_SERVICE="./spotifyd.service"
-sed -i "s/\bUSER\b/$USERNAME/g" "$SPOTIFYD_BUS_COF"
+# sed -i "s/\bUSER\b/$USERNAME/g" "$SPOTIFYD_BUS_COF"
 sed -i "s/\bDEVICE_NAME\b/$HOSTNAME/g" "$SPOTIFYD_CONF"
 sed -i "s/\bUSER\b/$USERNAME/g" "$SPOTIFYD_CONF"
 sed -i "s|/home/USER/|/home/$USERNAME/|g" "$SPOTIFYD_SERVICE"
@@ -66,14 +66,14 @@ mv ./spotifyd.conf "$HOME_DIR/.config/spotifyd/spotifyd.conf"
 mv ./spotifyd.service "$HOME_DIR/.config/systemd/user/"
 
 # Copy bus config to /usr/share/dbus-1/system.d/
-sudo mv ./spotifyd.bus.conf /usr/share/dbus-1/system.d/
+# sudo mv ./spotifyd.bus.conf /usr/share/dbus-1/system.d/
 
 # Initialize spotifyd
 echo "[INFO] Initializing spotifyd for 12 seconds."
 timeout 12s spotifyd --no-daemon || true
 
 # Start spotifyd running as a service
-systemctl reload dbus
+# systemctl reload dbus
 systemctl --user daemon-reload
 systemctl --user enable spotifyd.service --now
 
