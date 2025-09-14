@@ -43,7 +43,7 @@ tar xzf "$ARCHIVE_NAME"
 sudo chmod +x spotifyd
 sudo mv spotifyd /usr/local/bin/
 
-# Copy config and service filep 
+# Copy config and service file 
 # cp ./config/spotifyd.bus.conf spotifyd.bus.conf 
 cp ./config/spotifyd.conf spotifyd.conf 
 cp ./config/spotifyd.service spotifyd.service
